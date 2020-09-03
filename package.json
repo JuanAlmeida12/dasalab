@@ -23,30 +23,14 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
+    "joi": "^17.2.1",
     "mongoose": "^5.10.2",
     "nodemon": "^2.0.4",
     "pm2": "^4.4.1"
   },
   "devDependencies": {
-    "@shelf/jest-mongodb": "^1.2.3",
     "jest": "^26.4.2",
     "jest-junit": "^11.1.0",
     "supertest": "^4.0.2"
-  },
-  "jest": {
-    "preset": "@shelf/jest-mongodb",
-    "verbose": true,
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "node"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/"
-    ],
-    "collectCoverage": true,
-    "testMatch": [
-      "**/*.test.js"
-    ]
   }
 }
