@@ -74,24 +74,24 @@ const updateExam = (id, val) => {
     })
 }
 
-const associateLab = (examId, labId) => {
-    return new Promise((resolve, reject) => laboratoryDB.findLaboratory(labId).then(lab => {
-        if (!lab) return reject({
-            status: 'fail'
-        })
+const associateLab = async (examId, labId) => {
+    const lab = await laboratoryDB.findLaboratory(labId)
 
-        Exam.findOneAndUpdate({ _id: examId, status: STATUS_TYPE.ACTIVE }, { $push: { labs: labId } }).then(resp => {
-            return resolve({
-                examId,
-                labId,
-                status: 'success'
-            })
-        }).catch(err => {
-            return reject({
-                status: 'fail'
-            })
-        })
-    }))
+    if (!lab) return {
+        status: 'fail'
+    }
+
+    return Exam.findOneAndUpdate({ _id: examId, status: STATUS_TYPE.ACTIVE }, { $push: { labs: labId } }).then(resp => {
+        return {
+            examId,
+            labId,
+            status: 'success'
+        }
+    }).catch(err => {
+        return {
+            status: 'fail'
+        }
+    })
 }
 
 const unassociateLab = async (examId, labId) => {
