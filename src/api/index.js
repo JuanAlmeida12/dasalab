@@ -7,4 +7,7 @@ module.exports = (server) => {
 
     // Laboratory Routes
     require('./laboratory')(router)
+
+    // Exam Routes
+    require('./exam')(router)
 }
