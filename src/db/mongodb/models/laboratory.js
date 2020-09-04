@@ -1,8 +1,8 @@
-const mongoose = require('mongoose')
+const mongoose = require('../connection')
 const { STATUS_TYPE } = require('../../../utils/consts')
 
 const Schema = mongoose.Schema
-const StudentSchema = new Schema({
+const LaboratorySchema = new Schema({
     name: { type: String, required: true },
     address: String,
     status: {
@@ -11,6 +11,6 @@ const StudentSchema = new Schema({
     },
 })
 
-let Student = mongoose.model('Student', StudentSchema)
+const Laboratory = mongoose.model('Laboratory', LaboratorySchema)
 
-module.exports = Student
+module.exports = Laboratory

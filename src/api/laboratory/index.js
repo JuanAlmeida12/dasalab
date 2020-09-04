@@ -22,11 +22,15 @@ module.exports = (router, database) => {
        * Add new laboratory on persistence
        */
     router.post(LABORATORY_BASE_URL, (req, res) => {
-        laboratoryDB.addLaboratory(req.body).then(data => {
-            res.status(201).json(data)
-        }).catch(err => {
-            res.status(400).json({ message: err.message })
-        })
+        try {
+            laboratoryDB.addLaboratory(req.body).then(data => {
+                res.status(201).json(data)
+            }).catch(err => {
+                res.status(500).json({ message: err.message })
+            })
+        } catch (e) {
+            res.status(400).json({ message: e.message })
+        }
     })
 
     /**
@@ -38,7 +42,7 @@ module.exports = (router, database) => {
         laboratoryDB.findLaboratory(id).then(data => {
             res.status(200).json(data)
         }).catch(err => {
-            res.status(204).json(err)
+            res.status(500).json({ message: err.message })
         })
     })
 
@@ -47,12 +51,15 @@ module.exports = (router, database) => {
        */
     router.put(`${LABORATORY_BASE_URL}/:id`, (req, res) => {
         const { id } = req.params
-
-        laboratoryDB.updateLaboratory(id, req.body).then(data => {
-            res.status(200).json(data)
-        }).catch(err => {
-            res.status(400).json(err)
-        })
+        try {
+            laboratoryDB.updateLaboratory(id, req.body).then(data => {
+                res.status(200).json(data)
+            }).catch(err => {
+                res.status(500).json({ message: err.message })
+            })
+        } catch (e) {
+            res.status(400).json({ message: e.message })
+        }
     })
 
     /**
@@ -64,7 +71,7 @@ module.exports = (router, database) => {
         laboratoryDB.deleteLaboratory(id).then(data => {
             res.status(204).json(data)
         }).catch(err => {
-            res.status(400).json(err)
+            res.status(500).json({ message: err.message })
         })
     })
 }

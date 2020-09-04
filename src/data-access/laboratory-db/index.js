@@ -1,8 +1,9 @@
 const data_provider = process.env.DATA_PROVIDER
+
 const {
     listLaboratories,
     findLaboratory,
-    findLaboratoryBy,
+    findLaboratoriesBy,
     addLaboratory,
     deleteLaboratory,
     updateLaboratory,
@@ -14,7 +15,7 @@ const {
 const laboratoryDb = {
     listLaboratories,
     findLaboratory,
-    findLaboratoryBy,
+    findLaboratoriesBy,
     addLaboratory,
     deleteLaboratory,
     updateLaboratory,

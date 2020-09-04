@@ -1,7 +1,5 @@
-const server = require('./server')
+const { app, server } = require('./server')
 
-require('./db')
-
-require('./api')(server)
+require('./api')(app)
 
 module.exports = server

@@ -58,11 +58,21 @@ const updateLaboratory = (id, val) => {
         address: laboratory.getAddress(),
         status: laboratory.getStatus(),
     }
-    return Laboratory.findByIdAndUpdate(id, newLaboratory).then(serialize)
+    return Laboratory.findByIdAndUpdate(id, newLaboratory).then(resp => {
+        return {
+            laboratory_old: serialize(resp),
+            laboratory: serialize({ _id: id, ...newLaboratory }),
+            status: 'success'
+        }
+    }).catch(err => {
+        return {
+            status: 'fail'
+        }
+    })
 }
 
 const dropAll = () => {
-    return Laboratory.remove()
+    return Laboratory.remove({})
 }
 
 module.exports = {

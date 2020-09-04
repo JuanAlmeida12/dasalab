@@ -1,1 +1,0 @@
-process.env.DATA_PROVIDER === 'mongo' && require('./db/mongodb/connection')

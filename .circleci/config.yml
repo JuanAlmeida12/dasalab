@@ -1,7 +1,7 @@
+version: 2.1
 orbs:
   node: circleci/node@4.0.0
-
-version: 2.1
+  coveralls: coveralls/coveralls@1.0.4
 
 jobs:
   build:
@@ -17,7 +17,13 @@ jobs:
           command: npm test
           environment:
             JEST_JUNIT_OUTPUT_DIR: ./reports/junit/
+      - coveralls/upload
       - store_test_results:
           path: ./reports/junit/
       - store_artifacts:
           path: ./reports/junit
+
+notify:
+  webhooks:
+    - url: https://coveralls.io/webhook?repo_token=${process.env.COVERALLS_REPO_TOKEN}
+    

@@ -3,15 +3,15 @@ const port = process.env.PORT || 3333
 const bodyParser = require('body-parser')
 const express = require('express')
 
-const server = express()
+const app = express()
 const allowCors = require('./middlewares/cors')
 
-server.use(bodyParser.urlencoded({ extended: true }))
-server.use(bodyParser.json())
-server.use(allowCors)
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(allowCors)
 
-server.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`Server running at port: ${port}`)
 })
 
-module.exports = server
+module.exports = { server, app }
