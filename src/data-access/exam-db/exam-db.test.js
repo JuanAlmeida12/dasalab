@@ -1,9 +1,19 @@
 const examDb = require('./index')
+
+const laboratoryDb = require('./../laboratory-db')
 const { STATUS_TYPE, EXAM_TYPE } = require('../../utils/consts')
 
 describe('examDb', () => {
     beforeEach(async () => {
-        await examDb.dropAll();
+        await examDb.dropAll()
+        await laboratoryDb.dropAll()
+        const labCeltics = {
+            name: 'Lab Celtics',
+            address: "Address Main Street, numer 4",
+        }
+
+        await laboratoryDb.addLaboratory(labCeltics)
+
         const examSeed1 = {
             name: 'Exam name 1',
             type: EXAM_TYPE.CLINICAL_ANALYSIS,
@@ -47,6 +57,7 @@ describe('examDb', () => {
         const examRed = {
             name: 'Exam Red',
             type: EXAM_TYPE.CLINICAL_ANALYSIS,
+            labs: []
         }
 
         const newExam = await examDb.addExam(examRed)
@@ -121,6 +132,44 @@ describe('examDb', () => {
 
         const invalidInput = await examDb.updateExam(9000, updatedLab)
         expect(invalidInput.status).toEqual('fail')
+    })
+
+    it('associate laboratory to exam', async () => {
+        const exams = await examDb.listExams()
+        const exam = exams[0]
+
+        const laboratories = await laboratoryDb.listLaboratories()
+        const laboratory = laboratories[0]
+
+        const invalidInput = await examDb.associateLab(exam.id, laboratory.id)
+        expect(invalidInput.status).toEqual('success')
+
+        const examWithLab = await examDb.findExam(exam.id)
+
+        expect(examWithLab.labs[0].id).toEqual(laboratory.id)
+    })
+
+    it('unassociate laboratory to exam', async () => {
+        const exams = await examDb.listExams()
+        const exam = exams[0]
+
+        const laboratories = await laboratoryDb.listLaboratories()
+        const laboratory = laboratories[0]
+
+        const associateInput = await examDb.associateLab(exam.id, laboratory.id)
+        expect(associateInput.status).toEqual('success')
+
+        const examWithLab = await examDb.findExam(exam.id)
+        
+        expect(examWithLab.labs[0].id).toEqual(laboratory.id)
+
+        const unassociateInput = await examDb.unassociateLab(exam.id, laboratory.id)
+        expect(unassociateInput.status).toEqual('success')
+
+        const examWithoutLab = await examDb.findExam(exam.id)
+        
+        expect(examWithoutLab.labs.filter(lab => lab.id == laboratory.id)).toEqual([])
+
     })
 
 })

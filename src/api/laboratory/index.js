@@ -5,7 +5,7 @@ const LABORATORY_BASE_URL = '/laboratories'
 
 const laboratoryDB = require('../../data-access/laboratory-db')
 
-module.exports = (router, database) => {
+module.exports = router => {
     /**
        * Retrieves all laboratories from database
        */

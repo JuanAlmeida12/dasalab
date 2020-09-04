@@ -1,6 +1,8 @@
 const request = require('supertest')
 const app = require('../../app')
 
+const laboratoryDb = require('../../data-access/laboratory-db')
+
 describe('API /api/laboratories', function () {
     const api = request(app)
 
@@ -31,8 +33,9 @@ describe('API /api/laboratories', function () {
             .expect(400).end(done)
     })
 
-    it('GET /api/laboratories/:id', done => {
-        api.get('/api/laboratories/1')
+    it('GET /api/laboratories/:id', async done => {
+        const lab = await laboratoryDb.addLaboratory({ name: 'Test Lab' })
+        api.get(`/api/laboratories/${lab.id}`)
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200).then(res => {
@@ -41,7 +44,7 @@ describe('API /api/laboratories', function () {
             })
 
 
-        api.get('/api/laboratories/12342134')
+        api.get('/api/laboratories/5f5246e8a01abc22a493d568')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200).then(res => {
@@ -50,8 +53,9 @@ describe('API /api/laboratories', function () {
             })
     })
 
-    it('PUT /api/laboratories/:id', done => {
-        api.put('/api/laboratories/1')
+    it('PUT /api/laboratories/:id', async done => {
+        const lab = await laboratoryDb.addLaboratory({ name: 'Test Lab' })
+        api.put(`/api/laboratories/${lab.id}`)
             .send({ name: 'Lab Test 3' })
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
@@ -62,20 +66,21 @@ describe('API /api/laboratories', function () {
             })
 
 
-        api.put('/api/laboratories/1')
+        api.put('/api/laboratories/5f5246e8a01abc22a493d568')
             .send({ name: 'Lab Test 3', status: 1 })
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(400, done)
     })
 
-    it('DELETE /api/laboratories/:id', done => {
-        api.delete('/api/laboratories/1')
+    it('DELETE /api/laboratories/:id', async done => {
+        const lab = await laboratoryDb.addLaboratory({ name: 'Test Lab' })
+        api.delete(`/api/laboratories/${lab.id}`)
             .set('Accept', 'application/json')
             .expect(204, done)
 
 
-        api.get('/api/laboratories/1')
+        api.get(`/api/laboratories/${lab.id}`)
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200).end((err, res) => {
@@ -87,6 +92,7 @@ describe('API /api/laboratories', function () {
 
 
     afterAll(done => {
+        laboratoryDb.dropAll()
         return app.close(done)
     })
 })

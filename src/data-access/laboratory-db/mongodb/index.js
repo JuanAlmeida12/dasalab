@@ -37,7 +37,7 @@ const addLaboratory = laboratoryInfo => {
 }
 
 const deleteLaboratory = id => {
-    return Laboratory.findByIdAndUpdate(id, { status: STATUS_TYPE.INACTIVE })
+    return Laboratory.findOneAndUpdate({ _id: id, status: STATUS_TYPE.ACTIVE }, { status: STATUS_TYPE.INACTIVE })
         .then(resp => {
             return {
                 id: resp._id.toString(),
@@ -58,7 +58,7 @@ const updateLaboratory = (id, val) => {
         address: laboratory.getAddress(),
         status: laboratory.getStatus(),
     }
-    return Laboratory.findByIdAndUpdate(id, newLaboratory).then(resp => {
+    return Laboratory.findOneAndUpdate({ _id: id, status: STATUS_TYPE.ACTIVE }, newLaboratory).then(resp => {
         return {
             laboratory_old: serialize(resp),
             laboratory: serialize({ _id: id, ...newLaboratory }),

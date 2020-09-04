@@ -62,14 +62,14 @@ const updateExam = (id, examInfo) => {
 
 const associateLab = async (examId, labId) => {
 
-    const lab = laboratoryDb.findLaboratory(labId)
+    const lab = await laboratoryDb.findLaboratory(labId)
 
     return findExam(examId).then(exam => {
-        if (exam && exam.id == id && lab) {
-            EXAMS = EXAMS.filter(exam => exam.serial != id)
+        if (exam && exam.id == examId && lab) {
+            EXAMS = EXAMS.filter(exam => exam.serial != examId)
             const labs = exam.labs
-            labs.push(lab)
-            EXAMS.push({ serial: id, ...exam, labs })
+            labs.push({ ...lab, serial: lab.id })
+            EXAMS.push({ serial: examId, ...exam, labs })
             return {
                 labId,
                 examId,
@@ -87,10 +87,10 @@ const unassociateLab = async (examId, labId) => {
     const lab = laboratoryDb.findLaboratory(labId)
 
     return findExam(examId).then(exam => {
-        if (exam && exam.id == id && lab) {
-            EXAMS = EXAMS.filter(exam => exam.serial != id)
+        if (exam && exam.id == examId && lab) {
+            EXAMS = EXAMS.filter(exam => exam.serial != examId)
             const labs = exam.labs.filter(listLab => listLab.serial != lab.serial)
-            EXAMS.push({ serial: id, ...exam, labs })
+            EXAMS.push({ serial: examId, ...exam, labs })
             return {
                 labId,
                 examId,

@@ -4,9 +4,9 @@
   "description": "This is a test repository with a challenger defined by Dasa",
   "main": "src/app.js",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "cross-env DATA_PROVIDER=mongo nodemon",
     "production": "pm2 start src/app.js --name Dasalab",
-    "test": "jest --ci --runInBand --reporters=default --reporters=jest-junit --collectCoverage",
+    "test": "cross-env DATA_PROVIDER=memory jest --ci --runInBand --reporters=default --reporters=jest-junit --collectCoverage",
     "test:watch": "jest --watch"
   },
   "repository": {
