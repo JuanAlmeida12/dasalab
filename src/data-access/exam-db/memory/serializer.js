@@ -4,7 +4,8 @@ const _serializeSingle = (laboratory) => {
         'id': laboratory.serial,
         'name': laboratory.name,
         'type': laboratory.type,
-        'status': laboratory.status
+        'status': laboratory.status,
+        'labs': laboratory.labs
     }
 }
 

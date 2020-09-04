@@ -71,6 +71,34 @@ const updateExam = (id, val) => {
     })
 }
 
+const associateLab = (examId, labId) => {
+    return Exam.findByIdAndUpdate(examId, { $push: { labs: labId } }).then(resp => {
+        return {
+            examId,
+            labId,
+            status: 'success'
+        }
+    }).catch(err => {
+        return {
+            status: 'fail'
+        }
+    })
+}
+
+const unassociateLab = (examId, labId) => {
+    return Exam.findByIdAndUpdate(examId, { $pullAll: { labs: [labId] } }).then(resp => {
+        return {
+            examId,
+            labId,
+            status: 'success'
+        }
+    }).catch(err => {
+        return {
+            status: 'fail'
+        }
+    })
+}
+
 const dropAll = () => {
     return Exam.remove({})
 }
@@ -82,5 +110,7 @@ module.exports = {
     addExam,
     deleteExam,
     updateExam,
+    associateLab,
+    unassociateLab,
     dropAll
 }

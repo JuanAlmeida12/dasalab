@@ -1,6 +1,9 @@
 const { STATUS_TYPE } = require('../../../utils/consts')
 
 let EXAMS = require('../../../db/memory/exam')
+
+const laboratoryDb = require('../../laboratory-db')
+
 const makeExam = require('../../../models/exam')
 const serialize = require('./serializer')
 
@@ -57,6 +60,49 @@ const updateExam = (id, examInfo) => {
         })
 }
 
+const associateLab = async (examId, labId) => {
+
+    const lab = laboratoryDb.findLaboratory(labId)
+
+    return findExam(examId).then(exam => {
+        if (exam && exam.id == id && lab) {
+            EXAMS = EXAMS.filter(exam => exam.serial != id)
+            const labs = exam.labs
+            labs.push(lab)
+            EXAMS.push({ serial: id, ...exam, labs })
+            return {
+                labId,
+                examId,
+                status: 'success'
+            }
+        }
+        return {
+            status: 'fail'
+        }
+    })
+}
+
+const unassociateLab = async (examId, labId) => {
+
+    const lab = laboratoryDb.findLaboratory(labId)
+
+    return findExam(examId).then(exam => {
+        if (exam && exam.id == id && lab) {
+            EXAMS = EXAMS.filter(exam => exam.serial != id)
+            const labs = exam.labs.filter(listLab => listLab.serial != lab.serial)
+            EXAMS.push({ serial: id, ...exam, labs })
+            return {
+                labId,
+                examId,
+                status: 'success'
+            }
+        }
+        return {
+            status: 'fail'
+        }
+    })
+}
+
 const deleteExam = async id => {
     return findExam(id)
         .then(exam => {
@@ -87,5 +133,7 @@ module.exports = {
     addExam,
     deleteExam,
     updateExam,
+    associateLab,
+    unassociateLab,
     dropAll
 }
