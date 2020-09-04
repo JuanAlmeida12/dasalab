@@ -36,7 +36,7 @@ The project requires [NodeJs](www.nodejs.org), and a MongoDB base. Its possible 
 Clone the repository:
 
 ```shell
-git clone https://github.com/JuanAlmeida12/scoreboard.git
+git clone https://github.com/JuanAlmeida12/dasalab.git
 ```
 
 Open prompt/bash into repository directory and run the following command:
@@ -60,12 +60,12 @@ ENV NODE_ENV=production
 
 ## Docker
 
-You can use Docker just build the image:
+You can use Docker, just build the image:
 ```shell
  docker build -t dasalab .
 ```
 
-Create container the using image:
+Create the container using image:
 ```shell
  docker run -d -p 3333:3333 --name dasalab-container dasalab
 ```
