@@ -370,7 +370,7 @@ Status: 200 OK
 
 #### Delete a exam
 ```
-DELETE /api/exam/:id
+DELETE /api/exams/:id
 ```
 ##### Response
 ```
@@ -380,7 +380,7 @@ Status: 204
 
 #### Associate with a laboratory
 ```
-PUT /api/exam/:id/associate
+PUT /api/exams/:id/associate
 ```
 ##### Parameters
 | Name | Type | Description |
@@ -408,7 +408,7 @@ Status: 201
 
 #### Unassociate with a laboratory
 ```
-DELETE /api/exam/:id/associate
+DELETE /api/exams/:id/unassociate
 ```
 ##### Parameters
 | Name | Type | Description |
