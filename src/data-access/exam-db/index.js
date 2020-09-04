@@ -7,6 +7,8 @@ const {
     addExam,
     deleteExam,
     updateExam,
+    associateLab,
+    unassociateLab,
     dropAll
 }
     = data_provider === 'mongo' ? require('./mongodb/index') : require('./memory/index')
@@ -19,6 +21,8 @@ const laboratoryDb = {
     addExam,
     deleteExam,
     updateExam,
+    associateLab,
+    unassociateLab,
     dropAll,
 }
 

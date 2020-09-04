@@ -12,6 +12,7 @@ const ExamSchema = new Schema({
         type: String,
         enum: [STATUS_TYPE.ACTIVE, STATUS_TYPE.INACTIVE]
     },
+    labs: [{ type: Schema.Types.ObjectId, ref: 'Laboratory' }]
 })
 
 const Exam = mongoose.model('Exam', ExamSchema)

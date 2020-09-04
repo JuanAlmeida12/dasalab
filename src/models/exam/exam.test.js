@@ -78,4 +78,34 @@ describe('makeExam', () => {
         const input = exam.getStatus()
         expect(input).toEqual(status)
     })
+
+    it('must to empty labs ', () => {
+        const name = 'Exam 1'
+        const status = 'inactive'
+        const type = 'image'
+        const exam = makeExam({
+            name,
+            type,
+            status,
+        })
+        const input = exam.getLabs()
+        expect(input).toEqual([])
+    })
+
+    it('must to empty labs ', () => {
+        const name = 'Exam 1'
+        const status = 'inactive'
+        const type = 'image'
+        const labs = [{ name: 'Lab Seed 1' }, { name: 'Lab Seed 2' }, { name: 'Lab Seed 3' }]
+        const exam = makeExam({
+            name,
+            type,
+            status,
+            labs,
+        })
+        const input = exam.getLabs()
+        expect(input.length).toEqual(labs.length)
+    })
+
+
 })
