@@ -3,6 +3,12 @@ const STATUS_TYPE = {
     INACTIVE: 'inactive',
 }
 
+const EXAM_TYPE = {
+    IMAGE: 'image',
+    CLINICAL_ANALYSIS: 'clinical_analysis'
+}
+
 module.exports = {
-    STATUS_TYPE
+    STATUS_TYPE,
+    EXAM_TYPE
 }

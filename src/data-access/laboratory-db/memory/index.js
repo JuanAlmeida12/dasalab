@@ -75,8 +75,9 @@ const deleteLaboratory = async id => {
 }
 
 const dropAll = () => {
+    const tmp = LABORATORIES
     LABORATORIES = [];
-    return LABORATORIES;
+    return tmp;
 }
 
 module.exports = {

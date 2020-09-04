@@ -38,7 +38,7 @@ describe('laboratoryDb', () => {
         expect(input).toEqual(actual)
     })
 
-    it('finds all students by property', async () => {
+    it('finds all laboratories by property', async () => {
         const laboratories = await laboratoryDb.findLaboratoriesBy('Lab Celtics', 'name')
         expect(laboratories.length).toEqual(1)
     })
